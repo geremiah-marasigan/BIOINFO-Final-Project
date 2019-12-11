@@ -17,7 +17,7 @@ try:
 		line = fp.readline()
 finally:
 
-	with open('proteinData.json', 'w') as outfile:
+	with open('Protein-Data.json', 'w') as outfile:
 		json.dump(data, outfile);
 
 	fp.close()
