@@ -65,6 +65,7 @@ try:
 		line = fp.readline()
 	print("done")
 finally:
+	conn.commit()
 	conn.close()
 	print("oi")
 	#for key in data['Results']:
