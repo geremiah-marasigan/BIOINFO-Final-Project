@@ -60,9 +60,15 @@ def select_protein(conn, protein_name):
     cur.execute("SELECT * FROM proteins WHERE name=?", (protein_name,))
  
     result = cur.fetchone()
- 
-    # print('HSU JIA WEI',result)
     
+    return result
+
+def check_duplicate_alignments(conn, rna, protein_id):
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM alignments WHERE protein_id=? AND rna=?", (protein_id,rna,))
+
+    result = cur.fetchone()
+
     return result
 
 def init():
