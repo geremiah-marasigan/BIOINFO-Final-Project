@@ -2,14 +2,14 @@ import json
 
 try:
 	data = {}
-	data['protein'] =[]
+	data['RNA-Seq'] =[]
 
 	fp = open("../DATA/sample_1million.fastq")
 	line = fp.readline()
 	cnt = 1
 	while line:
 		if "@" in line:
-			data['protein'].append({
+			data['RNA-Seq'].append({
 				'id': line
 			})
 			print(cnt, ": ", line)
