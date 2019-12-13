@@ -1,13 +1,11 @@
 import json
 import dbhelper
 
-dbhelper.init()
-print('JIA')
-print(dbhelper.connection)
+conn = dbhelper.init()
+# print(conn)
 
 try:
-	fp = open("../DATA/out-fruit-fly-proteome_500k_1.maf")
-	print('WEI')
+	fp = open("../DATA/out-fruit-fly-proteome_100k_1.maf")
 	line = fp.readline()
 	first = True
 	cnt = 1
@@ -27,19 +25,22 @@ try:
 					# 	'id': ref[1],
 					# 	'aligned': {'rna': query[1], 'score': value}
 					# })
-					protein_id = dbhelper.create_protein(dbhelper.connection, protein)
+					protein_id = dbhelper.create_protein(conn, protein)
 					alignment = (protein_id, query[1], value)
-					dbhelper.create_alignment(dbhelper.connection, alignment)
+					dbhelper.create_alignment(conn, alignment)
 					first = False
 				else:
-					temp_protein = dbhelper.select_protein(dbhelper.connection, ref[1])
+					temp_protein = dbhelper.select_protein(conn, ref[1])
 					if temp_protein is not None:
 						alignment = (temp_protein[0], query[1], value)
-						dbhelper.create_alignment(dbhelper.connection, alignment)
+						dbhelper.create_alignment(conn, alignment)
 					else:
-						protein_id = dbhelper.create_protein(dbhelper.connection, protein)
+						protein_id = dbhelper.create_protein(conn, protein)
 						alignment = (protein_id, query[1], value)
-						dbhelper.create_alignment(dbhelper.connection, alignment)
+						dbhelper.create_alignment(conn, alignment)
+					cnt+=1
+					if(cnt % 1000000 == 0):
+						print('WEI WEI AN',cnt)
 					# for key in data['Results']:
 					# 	if key['id'] == ref[1]: #if one of the proteins already in Results has the same name of the read protein
 					# 		#print(key['aligned'])
@@ -64,7 +65,7 @@ try:
 		line = fp.readline()
 	print("done")
 finally:
-
+	conn.close()
 	print("oi")
 	#for key in data['Results']:
 	#	print(key)

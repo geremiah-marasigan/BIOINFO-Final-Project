@@ -11,7 +11,7 @@ def create_connection(db_file):
 
     return conn
  
- 
+
 def create_table(conn, create_table_sql):
     """ create a table from the create_table_sql statement
     :param conn: Connection object
@@ -83,16 +83,15 @@ def init():
                                 );"""
  
     # create a database connection
-    conn = create_connection(database)
-    print(conn)
+    connection = create_connection(database)
     # create tables
-    if conn is not None:
+    if connection is not None:
         # create projects table
-        create_table(conn, sql_create_proteins_table)
+        create_table(connection, sql_create_proteins_table)
  
         # create tasks table
-        create_table(conn, sql_create_alignments_table)
+        create_table(connection, sql_create_alignments_table)
     else:
         print("Error! cannot create the database connection.")
 
-connection = create_connection(r"C:\sqlite\db\pythonsqlite.db")
+    return connection
