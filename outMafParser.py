@@ -27,9 +27,8 @@ try:
 				else:
 					temp_protein = dbhelper.select_protein(conn, ref[1])
 					if temp_protein is not None:
-						if dbhelper.check_duplicate_alignments(conn, query[1],temp_protein[0]) is None:
-							alignment = (temp_protein[0], query[1], value)
-							dbhelper.create_alignment(conn, alignment)
+						alignment = (temp_protein[0], query[1], value)
+						dbhelper.create_alignment(conn, alignment)
 					else: 
 						protein_id = dbhelper.create_protein(conn, protein)
 						alignment = (protein_id, query[1], value)
