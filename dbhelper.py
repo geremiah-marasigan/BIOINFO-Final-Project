@@ -1,5 +1,7 @@
 import sqlite3
 
+database = r"C:\sqlite\db\pythonsqlite.db"
+
 def create_connection(db_file):
     """ create a database connection to a SQLite database """
     conn = None
@@ -31,7 +33,7 @@ def create_protein(conn, protein):
     :param project:
     :return: project id
     """
-    sql = ''' INSERT INTO proteins(name, gene)
+    sql = ''' INSERT INTO proteins(name, count)
               VALUES(?, ?) '''
     cur = conn.cursor()
     cur.execute(sql, protein)
@@ -63,21 +65,25 @@ def select_protein(conn, protein_name):
     
     return result
 
-def check_duplicate_alignments(conn, rna, protein_id):
+def update_protein(conn, protein_id, count):
+    """
+    update priority, begin_date, and end date of a task
+    :param conn:
+    :param task:
+    :return: project id
+    """
+    sql = ''' UPDATE proteins
+              SET count = ?
+              WHERE id = ?'''
     cur = conn.cursor()
-    cur.execute("SELECT * FROM alignments WHERE protein_id=? AND rna=?", (protein_id,rna,))
-
-    result = cur.fetchone()
-
-    return result
+    cur.execute(sql, (count,protein_id,))
+    conn.commit()
 
 def init():
-    database = r"C:\sqlite\db\pythonsqlite.db"
- 
     sql_create_proteins_table = """ CREATE TABLE IF NOT EXISTS proteins (
                                         id integer PRIMARY KEY,
                                         name text NOT NULL,
-                                        gene text
+                                        count integer
                                     ); """
  
     sql_create_alignments_table = """CREATE TABLE IF NOT EXISTS alignments (
