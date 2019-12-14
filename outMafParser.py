@@ -27,7 +27,8 @@ try:
 				else:
 					temp_protein = dbhelper.select_protein(conn, ref[1])
 					if temp_protein is not None:
-						dbhelper.update_protein(conn, temp_protein[0], temp_protein[2])
+						count = int(temp_protein[2])+1
+						dbhelper.update_protein(conn, temp_protein[0], count)
 						alignment = (temp_protein[0], query[1], value)
 						dbhelper.create_alignment(conn, alignment)
 					else: 
