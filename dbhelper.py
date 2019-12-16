@@ -1,6 +1,6 @@
 import sqlite3
 
-database = r"C:\sqlite\db\pythonsqlite.db"
+database = "../SQLite/alignments-marine-copepod.db" #Change file name depending on the proteome being used
 
 def create_connection(db_file):
     """ create a database connection to a SQLite database """

@@ -4,7 +4,7 @@ import dbhelper
 conn = dbhelper.init()
 
 try:
-	fp = open("../DATA/out-fruit-fly-proteome_100k_1.maf")
+	fp = open("../maf/out-marine-copepod-proteome.maf") #Change file name depending on the output files
 	line = fp.readline()
 	first = True
 	cnt = 1
@@ -35,14 +35,10 @@ try:
 						protein_id = dbhelper.create_protein(conn, protein)
 						alignment = (protein_id, query[1], value)
 						dbhelper.create_alignment(conn, alignment)
-					cnt+=1
-					if(cnt % 1000000 == 0):
-						print('Why hello there',cnt)
 		line = fp.readline()
-	print("done")
 finally:
 	conn.commit()
 	conn.close()
-	print("oi")
+	print("Parsing Complete")
 
 	fp.close()
